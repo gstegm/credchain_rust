@@ -44,8 +44,8 @@ pub fn verifier_sign (key: SigningKey, data: &[u8]) -> Signature {
     return signature;
 }
 
-pub fn verifier_encrypt(value: i64, encryptor: CompressedPublicKey) -> FheInt64 {
-    let cipher = addon::encrypt_public_key(value, encryptor);
+pub fn verifier_encrypt(value: i64, decryptor:ClientKey) -> FheInt64 {
+    let cipher = addon::encrypt(value, decryptor);
     return cipher;
 }
 
@@ -107,7 +107,7 @@ pub fn verifier_set_up(threshold_plaintext: i64) -> (VerifyingKey, Signature, Ve
     let (signing_key, verifying_key) = generate_signature_keys();
     let verifying_key_enc = verifying_key.to_encoded_point(false);
 
-    let threshold_ciphertext = verifier_encrypt(threshold_plaintext, encryptor.clone());
+    let threshold_ciphertext = verifier_encrypt(threshold_plaintext, decryptor.clone());
 
     let mut threshold_ciphertext_ser = vec![];
     safe_serialize(&threshold_ciphertext, &mut threshold_ciphertext_ser, 1 << 20).unwrap();
