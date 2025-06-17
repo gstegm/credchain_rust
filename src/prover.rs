@@ -1,6 +1,6 @@
 use p521::ecdsa::{signature::Signer, Signature, SigningKey, signature::Verifier, VerifyingKey};
 use rand_core::OsRng;
-use tfhe::{ClientKey, CompressedPublicKey, CompressedServerKey, FheInt64, FheBool};
+use tfhe::{ClientKey, CompressedCompactPublicKey, CompressedServerKey, FheInt64, FheBool};
 use tfhe::safe_serialization::{safe_serialize, safe_deserialize};
 use crate::addon;
 
@@ -25,7 +25,7 @@ pub fn compute_result(evaluator: CompressedServerKey, cipher1: FheInt64, cipher2
     return comp_result;
 }
 
-pub fn prover_encrypt(value: i64, encryptor: CompressedPublicKey) -> FheInt64 {
+pub fn prover_encrypt(value: i64, encryptor: CompressedCompactPublicKey) -> FheInt64 {
     let cipher = addon::encrypt_public_key(value, encryptor);
     return cipher;
 }
@@ -39,7 +39,7 @@ pub fn prover_encrypt(value: i64, encryptor: CompressedPublicKey) -> FheInt64 {
 //    }
 //}
 
-pub fn prover_calculate(issuance_plaintext: i64, sign_public_key: VerifyingKey, signature: Signature, threshold_ciphertext_ser: Vec<u8>, encryptor: CompressedPublicKey, evaluator: CompressedServerKey) -> FheBool {
+pub fn prover_calculate(issuance_plaintext: i64, sign_public_key: VerifyingKey, signature: Signature, threshold_ciphertext_ser: Vec<u8>, encryptor: CompressedCompactPublicKey, evaluator: CompressedServerKey) -> FheBool {
     let ver = signature_verify(sign_public_key, signature, &threshold_ciphertext_ser);
     println!("Verification result: {}", ver);
     assert!(ver);

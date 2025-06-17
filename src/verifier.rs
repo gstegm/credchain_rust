@@ -2,13 +2,13 @@ use std::fs;
 use p521::ecdsa::{signature::Signer, Signature, SigningKey, signature::Verifier, VerifyingKey};
 use p521::EncodedPoint;
 use rand::rngs::OsRng;
-use tfhe::{ClientKey, CompressedPublicKey, CompressedServerKey, FheInt64, FheBool};
+use tfhe::{ClientKey, CompressedCompactPublicKey, CompressedServerKey, FheInt64, FheBool};
 use tfhe::safe_serialization::{safe_serialize, safe_deserialize};
 use serde::{Deserialize, Serialize};
 use serde_json::Result;
 use crate::{addon, verifier};
 
-pub fn generate_encryption_keys() -> (ClientKey, CompressedServerKey, CompressedPublicKey){
+pub fn generate_encryption_keys() -> (ClientKey, CompressedServerKey, CompressedCompactPublicKey){
     let (decryptor, evaluator, encryptor) = addon::get_keys();
     return (decryptor, evaluator, encryptor);
 }
@@ -97,12 +97,12 @@ struct VerifierSetupData {
     verifying_key_enc: EncodedPoint, 
     signature: Signature, 
     threshold_ciphertext_ser: Vec<u8>, 
-    encryptor: CompressedPublicKey, 
+    encryptor: CompressedCompactPublicKey, 
     decryptor: ClientKey, 
     evaluator: CompressedServerKey,
 }
 
-pub fn verifier_set_up(threshold_plaintext: i64) -> (VerifyingKey, Signature, Vec<u8>, CompressedPublicKey, ClientKey, CompressedServerKey) {
+pub fn verifier_set_up(threshold_plaintext: i64) -> (VerifyingKey, Signature, Vec<u8>, CompressedCompactPublicKey, ClientKey, CompressedServerKey) {
     let (decryptor, evaluator, encryptor) = generate_encryption_keys();
     let (signing_key, verifying_key) = generate_signature_keys();
     let verifying_key_enc = verifying_key.to_encoded_point(false);
