@@ -12,7 +12,7 @@ fn main() {
     let mut verifier_set_up_stat: Vec<(f32, f32, f32)> = vec![];     // step 1: verifier sets up params, encrypts, signs
     let mut prover_stat: Vec<(f32, f32, f32)> = vec![];     // step 2: prover verifies sig, computes result
     let mut verifier_verify_stat: Vec<(f32, f32, f32)> = vec![];     // step 3: verifier proves the result
-    let mut csv_string: String = "run, verifierSetUpCPU, verifierSetUpMemory, verifierSetUpTime, proverCPU, proverMemory, proverTime, verifierVerifyCPU, verifierVerifyMemory, verifierVerifyTime\n".to_owned();
+    let mut csv_string: String = "\"run\",\"verifierSetUpCPU\",\"verifierSetUpMemory\",\"verifierSetUpTime\",\"proverCPU\",\"proverMemory\",\"proverTime\",\"verifierVerifyCPU\",\"verifierVerifyMemory\",\"verifierVerifyTime\"\n".to_owned();
 
     for i in 0..400 {
         println!("Run: {}", i+1);
