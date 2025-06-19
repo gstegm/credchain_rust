@@ -54,7 +54,7 @@ pub fn greater_than(cipher_a: FheInt64, cipher_b: FheInt64, compressed_server_ke
     //set_server_key(gpu_key);
     set_server_key(server_key);
 
-    let gtresult = cipher_a.gt(cipher_b.clone());
+    let gtresult = cipher_a.gt(&cipher_b);
     let elapsed = now.elapsed();
     println!("greater_than elapsed: {:.2?}", elapsed);
     return gtresult;
@@ -67,7 +67,7 @@ pub fn less_than_equal(cipher_a: FheInt64, cipher_b: FheInt64, compressed_server
     //set_server_key(gpu_key);
     set_server_key(server_key);
 
-    let leresult = cipher_a.le(cipher_b.clone());
+    let leresult = cipher_a.le(&cipher_b);
     let elapsed = now.elapsed();
     println!("less_than_equal elapsed: {:.2?}", elapsed);
     return leresult;
