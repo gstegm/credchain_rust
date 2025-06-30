@@ -9,3 +9,6 @@ and the performance measurement executed with
 ```shell
 cargo run --release
 ```
+
+# References 
+- [TFHE-rs](https://github.com/zama-ai/tfhe-rs) library for Homomorphic Encryption in Rust, based on the TFHE encryption scheme. Read the documentation [here](https://docs.zama.ai/tfhe-rs).
